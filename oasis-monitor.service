@@ -1,0 +1,15 @@
+[Unit]
+Description=Oasis Monitor
+After=network.target
+StartLimitIntervalSec=0
+
+[Service]
+Type=simple
+Restart=always
+User=<USER>
+TimeoutStopSec=90s
+WorkingDirectory=<PATH>/oasis-monitor
+ExecStart=/bin/bash <PATH>/oasis-monitor/start.sh
+
+[Install]
+WantedBy=multi-user.target

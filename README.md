@@ -17,9 +17,18 @@ If either condition occurs, it will send you a page via Pager Duty's API.
 - Modify global variables in `src/monitor.ts` for the specifics of your setup. 
 - Run `./start.sh`.
 
-You'll likely need to do a bit of light customization to make this infrastructure suite your exact needs. PRs to generalize the software or extend functionality are welcome. 
+You'll likely need to do a bit of light customization to make this infrastructure suite your exact needs. PRs to generalize the software or extend functionality are welcome. In particular, it would be cool to provide a customizatble remote API.
 
 Feel free to drop us a line on [Keybase](https://keybase.io/tessellatedgeo#_) or at [hello@tessellatedgeometry.com](mailto:hello@tessellatedgeometry.com) if you need help.
+
+# Daemon
+
+A service definition is included. You can modify and deploy the deamon with:
+```shell
+mv oasis-monitor.service /etc/systemd/system/
+systemctl enable oasis-monitor
+systemctl start oasis-monirot
+```
 
 ## Say Thanks
 

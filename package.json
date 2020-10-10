@@ -6,10 +6,10 @@
     "node-pagerduty": "^1.3.4",
     "ts-node": "^9.0.0",
     "typescript": "^4.0.3",
-    "web-request": "^1.0.7",
+    "web-request": "^1.0.7"
   },
   "scripts": {
-    "start": "ts-node src/monitor.ts",
+    "start": "ts-node src/monitor.ts"
   },
   "keywords": [
     "oasis",
