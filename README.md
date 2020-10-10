@@ -27,7 +27,7 @@ A service definition is included. You can modify and deploy the deamon with:
 ```shell
 mv oasis-monitor.service /etc/systemd/system/
 systemctl enable oasis-monitor
-systemctl start oasis-monirot
+systemctl start oasis-monitor
 ```
 
 ## Say Thanks
