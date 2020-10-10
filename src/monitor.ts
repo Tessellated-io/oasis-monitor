@@ -70,23 +70,24 @@ const monitor = async () => {
       const localHeight = localData.result.height
       const remoteHeight = remoteData[0].level
       const lag = Math.abs(localHeight - remoteHeight)
-      console.log("Lag is" + lag)
+      console.log("Lag is " + lag)
       if (lag > ACCEPTABLE_LAG) {
         page("Node is lagging", "Local: " + localResult + ", Remote: " + remoteHeight, THROTTLE_INTERVAL_SECONDS, "lag")
         continue
       }
 
       // Query local node for commits.
-      const commitUrl = LOCAL_NODE_NAME + "/api/consensus/blocklastcommit?name=" + LOCAL_NODE_NAME
+      const commitUrl = LOCAL_API + "/api/consensus/blocklastcommit?name=" + LOCAL_NODE_NAME
       const commitResult = await WebRequest.get(commitUrl, HEADERS)
       if (localResult.statusCode !== 200) {
         page("Local API is down", `${localResult.statusCode}: ${localResult.content}`, THROTTLE_INTERVAL_SECONDS, `${localResult.statusCode}`)
         continue
       }
+      const commitData = JSON.parse(commitResult.content)
 
       // Search through all commits to ensure that our validator signed it.
       let found = false
-      const signatures = remoteData.result.signatures
+      const signatures = commitData.result.signatures
       for (let i = 0; i < signatures.length; i++) {
         const signature = signatures[i]
         if (signatures.validator_address === VALIDATOR_ADDRESS) {
