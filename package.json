@@ -1,0 +1,28 @@
+{
+  "name": "oasis-monitor",
+  "version": "0.1.0",
+  "description": "Typescript monitor for an Oasis Validator",
+  "dependencies": {
+    "node-pagerduty": "^1.3.4",
+    "ts-node": "^9.0.0",
+    "typescript": "^4.0.3",
+    "web-request": "^1.0.7",
+  },
+  "scripts": {
+    "start": "ts-node src/monitor.ts",
+  },
+  "keywords": [
+    "oasis",
+    "validator",
+    "test",
+    "monitor"
+  ],
+  "author": "Tessellated Geometry LLC",
+  "homepage": "https://tessellatedgeometry.com",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/tessellatedgeometry/oasis-monitor"
+  },
+  "private": true,
+  "license": "MIT"
+}

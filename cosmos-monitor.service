@@ -1,0 +1,12 @@
+[Unit]
+Description     = Cosmos Monitor Service
+
+[Service]
+User            = ubuntu
+Group		= ubuntu
+WorkingDirectory= /home/ubuntu/cosmos-monitor
+ExecStart       = /home/ubuntu/cosmos-monitor/manual-start.sh
+Restart         = always
+
+[Install]
+WantedBy = multi-user.target
