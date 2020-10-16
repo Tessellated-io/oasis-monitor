@@ -33,13 +33,20 @@ const CHECK_INTERVAL_SECONDS = 5
 // How often to send a page for the same event.
 const THROTTLE_INTERVAL_SECONDS = 5 * 60
 
+// The number of times the process can error before it pages you. 
+// This servers to stop users from accidentally getting if the oasis-node or oasis-api drop
+// an API request or are unresponsive.
+const ACCEPTABLE_CONSECUTIVE_FLAKES = 3
+
 /** End Config */
 
 const HEADERS = { "headers": { "Content-Type": "application/json" } };
 
 const pagerDutyClient = new PagerDuty(PAGER_DUTY_API_KEY);
 const pagerDutyThrottle: Map<string, Date> = new Map();
+
 let consecutiveMisses = 0
+let consecutiveFlakes = 0
 
 const monitor = async () => {
   while (true) {
@@ -107,10 +114,15 @@ const monitor = async () => {
         continue
       }
 
+      consecutiveFlakes = 0
       console.log("Health check passed.")
     } catch (e) {
       console.log("Unknown error: " + e + ". Paging.")
-      page("Unknown error", e.message, 5 * 60, e.message)
+
+      consecutiveFlakes++
+      if (consecutiveFlakes >= ACCEPTABLE_CONSECUTIVE_FLAKES) {
+        page("Unknown error", e.message, 5 * 60, e.message)
+      }
     }
 
     await sleep(CHECK_INTERVAL_SECONDS)
