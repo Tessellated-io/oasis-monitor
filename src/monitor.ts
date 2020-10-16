@@ -117,9 +117,9 @@ const monitor = async () => {
       consecutiveFlakes = 0
       console.log("Health check passed.")
     } catch (e) {
-      console.log("Unknown error: " + e + ". Paging.")
-
       consecutiveFlakes++
+
+      console.log("Unknown error: " + e + ". Consecutive flakes is now: " + consecutiveFlakes)
       if (consecutiveFlakes >= ACCEPTABLE_CONSECUTIVE_FLAKES) {
         page("Unknown error", e.message, 5 * 60, e.message)
       }
