@@ -40,6 +40,8 @@ const ACCEPTABLE_CONSECUTIVE_FLAKES = 3
 
 /** End Config */
 
+let version = "0.0.2"
+
 const HEADERS = { "headers": { "Content-Type": "application/json" } };
 
 const pagerDutyClient = new PagerDuty(PAGER_DUTY_API_KEY);
@@ -49,6 +51,8 @@ let consecutiveMisses = 0
 let consecutiveFlakes = 0
 
 const monitor = async () => {
+  console.log("Starting Oasis Health Monitor v" + version)
+
   while (true) {
     console.log("Running Health Check!")
 
