@@ -18,8 +18,11 @@ const LOCAL_API = "http://127.0.0.1:8080"
 // The name of the node in the local API.
 const LOCAL_NODE_NAME = "oasis-node"
 
-// How many blocks the nodes can be out sync before you are paged.
-const ACCEPTABLE_LAG = 2
+// How many blocks the local node can be out of sync.
+const ACCEPTABLE_LAG = 10
+
+// How many blocks the loacl node can be out of sync
+const ACCEPTABLE_REMOTE_LAG = -100
 
 // How many blocks you can miss a precommit in before you are paged.
 const ACCEPTABLE_CONSECUTIVE_MISS = 2
@@ -36,7 +39,7 @@ const THROTTLE_INTERVAL_SECONDS = 5 * 60
 // The number of times the process can error before it pages you. 
 // This servers to stop users from accidentally getting if the oasis-node or oasis-api drop
 // an API request or are unresponsive.
-const ACCEPTABLE_CONSECUTIVE_FLAKES = 3
+const ACCEPTABLE_CONSECUTIVE_FLAKES = 6
 
 /** End Config */
 
@@ -80,11 +83,16 @@ const monitor = async () => {
       // Make sure any lag is within acceptable range. 
       const localHeight = localData.result.height
       const remoteHeight = remoteData[0].level
-      const lag = Math.abs(localHeight - remoteHeight)
-      console.log("Lag is " + lag)
+
+      const lag = remoteHeight - localHeight
+      if (lag !== 0) { console.log('> Lag: ' + lag) }
+
       if (lag > ACCEPTABLE_LAG) {
-        page("Node is lagging", "Local: " + localResult + ", Remote: " + remoteHeight, THROTTLE_INTERVAL_SECONDS, "lag")
-        continue
+        await page("Node is lagging", "Local: " + localHeight + ", Remote: " + remoteHeight, THROTTLE_INTERVAL_SECONDS, "lag")
+      }
+
+      if (lag < ACCEPTABLE_REMOTE_LAG) {
+        await page("Remote node is lagging", "Local: " + localHeight + ", Remote: " + remoteHeight, THROTTLE_INTERVAL_SECONDS, "remotelag")
       }
 
       // Query local node for commits.
