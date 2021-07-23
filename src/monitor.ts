@@ -113,7 +113,7 @@ const monitor = async () => {
           found = true
         }
       }
-      if (found = true) {
+      if (found == true) {
         consecutiveMisses = 0
       } else {
         consecutiveMisses++
