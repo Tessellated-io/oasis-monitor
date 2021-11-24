@@ -10,11 +10,25 @@ If either condition occurs, it will send you a page via Pager Duty's API.
 
 ## Setup 
 
-- Install `npm` (or `yarn` if that's your thing).
-- Run `npm i` to install dependencies.
 - This software requires the [Oasis API](https://github.com/SimplyVC/oasis_api_server) server to be running on the machine.
 - Retrieve your pager duty API token, pager duty service identifier, and pager duty email from [PagerDuty](http://pagerduty.com)
 - Modify global variables in `src/monitor.ts` for the specifics of your setup. 
+
+### Docker
+
+Build a container:
+```
+docker build -t tessellatedgeometry/oasis-monitor
+```
+
+You can then do whatever Docker things you want with the container.
+
+### Source
+
+If you're prefer to run from source:
+
+- Install `npm` (or `yarn` if that's your thing).
+- Run `npm i` to install dependencies.
 - Run `./start.sh`.
 
 You'll likely need to do a bit of light customization to make this infrastructure suite your exact needs. PRs to generalize the software or extend functionality are welcome. In particular, it would be cool to provide a customizatble remote API.
