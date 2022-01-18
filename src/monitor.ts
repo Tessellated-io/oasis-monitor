@@ -132,7 +132,7 @@ const monitor = async () => {
       const deltaSecs = Math.abs((now.getTime() - signatureTime.getTime()) / millisecondsPerSecond)
       console.log(`> Got a delta of ${deltaSecs} seconds`)
       if (deltaSecs > ACCEPTABLE_DELTA_SECS) {
-        page("Missed Precommits", "Consecutive misses: " + consecutiveMisses, THROTTLE_INTERVAL_SECONDS, "missed-precommit")
+        page("Noe is Lagging", `Lag is currnetly ${deltaSecs} seconds.`, THROTTLE_INTERVAL_SECONDS, "node-lag")
         console.log("Health checks failed.")
         continue
       }
